@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <style>
+        table, th, td {
+            border: 1px solid rgb(255, 0, 0);
+        }
+    </style>
+</head>
+<body>
+<h1>ПОЛЬЗОВАТЕЛИ</h1>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Имя пользователя</th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Email</th>
+        <th>Роль</th>
+    </tr>
+    <tr th:each="user: ${usersList}"
+        class="row">
+        <td th:utext="${user.id}">Id</td>
+        <td th:utext="${user.username}">Имя пользователя</td>
+        <td th:utext="${user.firstName}">Имя</td>
+        <td th:utext="${user.lastName}">Фамилия</td>
+        <td th:utext="${user.email}">Email</td>
+        <td th:utext="${user.getAuthorities()}">Роль</td>
+        <td>
+            <form th:action="@{/admin/edit/{Id}(Id=${user.id})}">
+                <input type="submit" value="Изменить данные пользователя"/>
+            </form>
+        </td>
+        <td>
+            <form th:method="DELETE" th:action="@{/admin/{Id}(Id=${user.id})}">
+                <input type="submit" value="Удалить пользователя"/>
+            </form>
+        </td>
+    </tr>
+</table>
+<br/>
+<br/>
+<form th:action="addUser">
+    <input type="submit" value="Добавить нового пользователя"/>
+</form>
+<br/>
+<form th:action="@{/logout}">
+    <input type="submit" value="Выйти"/>
+</form>
+</body>
+</html>
